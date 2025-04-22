@@ -1,0 +1,54 @@
+{
+  "source": {
+    "include": ["src"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "opts": {
+    "destination": "./docs/",
+    "recurse": true,
+    "readme": "README.md",
+    "template": "node_modules/docdash"
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "default": {
+      "outputSourceFiles": true,
+      "includeDate": false
+    }
+  },
+  "docdash": {
+    "static": false,
+    "sort": true,
+    "sectionOrder": [
+      "Classes",
+      "Modules",
+      "Externals",
+      "Events",
+      "Namespaces",
+      "Mixins",
+      "Tutorials",
+      "Interfaces"
+    ],
+    "meta": {
+      "title": "lq-dc-js API 文档",
+      "description": "多平台通用的JavaScript工具库",
+      "keyword": "javascript, utils, tools, library"
+    },
+    "search": true,
+    "collapse": true,
+    "typedefs": true,
+    "removeQuotes": "none",
+    "scripts": [],
+    "menu": {
+      "Github": {
+        "href": "https://github.com/yourusername/lq-dc-js",
+        "target": "_blank",
+        "class": "menu-item",
+        "id": "github_link"
+      }
+    }
+  }
+}
