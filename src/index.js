@@ -4,35 +4,89 @@
  */
 
 // 导入各个模块
-import * as array from './modules/array';
-import * as object from './modules/object';
-import * as string from './modules/string';
-import * as number from './modules/number';
-import * as date from './modules/date';
-import * as fun from './modules/function';
-import * as validator from './modules/validator';
-import * as platform from './modules/platform';
+import * as arrayModule from './modules/array';
+import * as objectModule from './modules/object';
+import * as stringModule from './modules/string';
+import * as numberModule from './modules/number';
+import * as dateModule from './modules/date';
+import * as functionModule from './modules/function';
+import * as validatorModule from './modules/validator';
+import * as platformModule from './modules/platform';
+import * as licenseModule from './modules/license';
+
+/**
+ * 创建受限版本的模块
+ * 当未授权时返回此版本
+ * @private
+ */
+function _createRestrictedModules() {
+  // 创建错误提示函数
+  const createErrorFn = (moduleName, methodName) => {
+    return function() {
+      throw new Error(
+        `未授权: ${moduleName}.${methodName}()`
+      );
+    };
+  };
+
+  // 为每个模块创建受限版本
+  const createRestrictedModule = (module, moduleName) => {
+    const restricted = {};
+    
+    // 遍历模块中的所有方法
+    Object.keys(module).forEach(key => {
+      if (typeof module[key] === 'function') {
+        // 替换为抛出错误的函数
+        restricted[key] = createErrorFn(moduleName, key);
+      } else {
+        // 非函数属性保持不变
+        restricted[key] = module[key];
+      }
+    });
+    
+    return restricted;
+  };
+
+  // 创建所有模块的受限版本
+  return {
+    arrayUtils: createRestrictedModule(arrayModule, 'arrayUtils'),
+    object: createRestrictedModule(objectModule, 'object'),
+    string: createRestrictedModule(stringModule, 'string'),
+    number: createRestrictedModule(numberModule, 'number'),
+    date: createRestrictedModule(dateModule, 'date'),
+    fun: createRestrictedModule(functionModule, 'function'),
+    validator: createRestrictedModule(validatorModule, 'validator'),
+    platform: createRestrictedModule(platformModule, 'platform'),
+    // 授权模块始终可用
+    license: licenseModule
+  };
+}
+
+// 根据授权状态导出模块
+const modules = license.isAuthorized() ? {
+  au: arrayModule,
+  ob: objectModule,
+  str: stringModule,
+  nu: numberModule,
+  date: dateModule,
+  fun: functionModule,
+  vl: validatorModule,
+  platform: platformModule,
+  license: licenseModule
+} : _createRestrictedModules();
 
 // 导出所有模块
-export {
-  array,
+export const {
+  arrayUtils,
   object,
   string,
   number,
   date,
   fun,
   validator,
-  platform
-};
+  platform,
+  license
+} = modules;
 
 // 默认导出
-export default {
-  array,
-  object,
-  string,
-  number,
-  date,
-  fun,
-  validator,
-  platform
-};
+export default modules;

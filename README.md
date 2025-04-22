@@ -44,10 +44,10 @@ yarn add lq-dc-js
 import lqDcJs from 'lq-dc-js';
 
 // 按需引入
-import { array, string } from 'lq-dc-js';
+import { arrayUtils, string } from 'lq-dc-js';
 
 // 引入特定函数
-import { safeGet } from 'lq-dc-js/array';
+import { safeGet } from 'lq-dc-js/arrayUtils';
 ```
 
 ### CommonJS
@@ -57,7 +57,7 @@ import { safeGet } from 'lq-dc-js/array';
 const lqDcJs = require('lq-dc-js');
 
 // 按需引入
-const { array, string } = require('lq-dc-js');
+const { arrayUtils, string } = require('lq-dc-js');
 ```
 
 ### 浏览器
@@ -66,7 +66,7 @@ const { array, string } = require('lq-dc-js');
 <script src="path/to/lq-dc-js/dist/index.umd.js"></script>
 <script>
   // 通过全局变量 lqDcJs 访问
-  const safeValue = lqDcJs.array.safeGet(myArray, 0, 'default');
+  const safeValue = lqDcJs.arrayUtils.safeGet(myArray, 0, 'default');
 </script>
 ```
 
@@ -75,14 +75,14 @@ const { array, string } = require('lq-dc-js');
 ### 安全获取数组元素
 
 ```javascript
-import { array } from 'lq-dc-js';
+import { arrayUtils } from 'lq-dc-js';
 
 const arr = [1, 2, 3];
 
 // 安全获取数组元素，防止越界访问
-const value1 = array.safeGet(arr, 1); // 2
-const value2 = array.safeGet(arr, 5, 'default'); // 'default'
-const value3 = array.safeGet(null, 0, 'default'); // 'default'
+const value1 = arrayUtils.safeGet(arr, 1); // 2
+const value2 = arrayUtils.safeGet(arr, 5, 'default'); // 'default'
+const value3 = arrayUtils.safeGet(null, 0, 'default'); // 'default'
 ```
 
 ### 安全获取对象属性
