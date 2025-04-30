@@ -12,11 +12,9 @@ import * as dateModule from './modules/date';
 import * as functionModule from './modules/function';
 import * as validatorModule from './modules/validator';
 import * as platformModule from './modules/platform';
-import * as licenseModule from './modules/license';
+import licenseModule from './modules/license';
 import wuHttp from './modules/wx_uniapp_http';
 import * as wxTools from './modules/wx_uniapp_tools';
-
-licenseModule.default.config.stopTime = 1745976617189 + 31536000 * 1000;
 
 /**
  * 创建受限版本的模块

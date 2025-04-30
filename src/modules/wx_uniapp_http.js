@@ -211,7 +211,7 @@ api.setResponseInterceptor((response) => {
     uni.showModal({
       title: '提示',
       content: '登录已失效，请重新登录',
-      showCancel: false,
+      showCancel: true,
       confirmText: '去登录',
       cancelText: '取消',
       success: (res) => {
