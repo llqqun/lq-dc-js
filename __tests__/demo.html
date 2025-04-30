@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lq-dc-js 测试页面</title>
+  <!-- 使用UMD版本，适合直接在浏览器中使用 -->
+  <script src="../dist/index.umd.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .test-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    h1 {
+      color: #333;
+    }
+    h2 {
+      color: #666;
+      margin-top: 0;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 3px;
+      overflow: auto;
+    }
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>lq-dc-js 库测试页面</h1>
+  
+  <div class="test-section">
+    <h2>1. 库导出检查</h2>
+    <pre id="export-check"></pre>
+  </div>
+  
+  <div class="test-section">
+    <h2>2. 数组工具测试</h2>
+    <pre id="array-test"></pre>
+  </div>
+  
+  <div class="test-section">
+    <h2>3. 字符串工具测试</h2>
+    <pre id="string-test"></pre>
+  </div>
+  
+  <div class="test-section">
+    <h2>4. 日期工具测试</h2>
+    <pre id="date-test"></pre>
+  </div>
+  
+  <div class="test-section">
+    <h2>5. 平台检测测试</h2>
+    <pre id="platform-test"></pre>
+  </div>
+
+  <script>
+    // 检查并处理嵌套的default对象
+    if (lqDcJs && lqDcJs.default && typeof lqDcJs.default === 'object') {
+      console.log('检测到嵌套的default对象，正在修复...');
+      lqDcJs = lqDcJs.default;
+    }
+    console.log('init:', lqDcJs);
+    console.log(lqDcJs.license);
+    // 检查库是否正确加载
+    // lqDcJs.license.setLicenseKey('lq-91-0302fffe5cf60ebb2dac1c49af3b6425a3e7d6a3', 'ft')
+    const exportCheck = document.getElementById('export-check');
+    exportCheck.textContent = '库导出对象: ' + Object.keys(lqDcJs).join(', ');
+    
+    // 数组工具测试
+    const arrayTest = document.getElementById('array-test');
+    const testArray = [1, 2, 2, 3, 4, 5, 5];
+    arrayTest.textContent = `原始数组: ${JSON.stringify(testArray)}\n`;
+    arrayTest.textContent += `安全获取索引2的值: ${lqDcJs.arrayUtils.safeGet(testArray, 2)}\n`;
+    arrayTest.textContent += `安全获取索引10的值(默认null): ${lqDcJs.arrayUtils.safeGet(testArray, 10)}\n`;
+    arrayTest.textContent += `数组去重: ${JSON.stringify(lqDcJs.arrayUtils.unique(testArray))}\n`;
+    arrayTest.textContent += `确保数组: ${JSON.stringify(lqDcJs.arrayUtils.ensureArray('test'))}\n`;
+    
+    // 字符串工具测试
+    const stringTest = document.getElementById('string-test');
+    stringTest.textContent = `确保字符串: ${lqDcJs.str.ensureString(123)}\n`;
+    stringTest.textContent += `安全截取字符串: ${lqDcJs.str.safeSubstring('Hello World', 0, 5)}\n`;
+    stringTest.textContent += `字符串是否为空: ${lqDcJs.str.isEmpty('')}, ${lqDcJs.str.isEmpty('Hello')}\n`;
+    stringTest.textContent += `字符串格式化: ${lqDcJs.str.format('Hello, {name}!', {name: 'World'})}\n`;
+    
+    // 日期工具测试
+    const dateTest = document.getElementById('date-test');
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    dateTest.textContent = `当前日期格式化: ${lqDcJs.date.format(today)}\n`;
+    dateTest.textContent += `自定义格式化: ${lqDcJs.date.format(today, 'YYYY年MM月DD日')}\n`;
+    dateTest.textContent += `两个日期之间的天数: ${lqDcJs.date.daysBetween(today, nextWeek)}\n`;
+    dateTest.textContent += `日期是否在范围内: ${lqDcJs.date.isInRange(today, today, nextWeek)}\n`;
+    
+    // 平台检测测试
+    const platformTest = document.getElementById('platform-test');
+    platformTest.textContent = `当前环境类型: ${lqDcJs.platform.getEnvType()}\n`;
+    platformTest.textContent += `是否在浏览器中: ${lqDcJs.platform.isBrowser()}\n`;
+    platformTest.textContent += `是否在Node.js中: ${lqDcJs.platform.isNode()}\n`;
+    platformTest.textContent += `是否在小程序中: ${lqDcJs.platform.isMiniProgram()}\n`;
+    
+    if (lqDcJs.platform.isBrowser()) {
+      const browserInfo = lqDcJs.platform.getBrowserInfo();
+      platformTest.textContent += `浏览器信息: ${JSON.stringify(browserInfo, null, 2)}\n`;
+    }
+  </script>
+</body>
+</html>

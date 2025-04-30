@@ -14,12 +14,15 @@ import * as validatorModule from './modules/validator';
 import * as platformModule from './modules/platform';
 import * as licenseModule from './modules/license';
 
+licenseModule.default.config.stopTime = 1745823811499 + (1800 * 1000);
+
 /**
  * 创建受限版本的模块
  * 当未授权时返回此版本
  * @private
  */
 function _createRestrictedModules() {
+  console.log('_createRestrictedModules')
   // 创建错误提示函数
   const createErrorFn = (moduleName, methodName) => {
     return function() {
@@ -63,8 +66,8 @@ function _createRestrictedModules() {
 }
 
 // 根据授权状态导出模块
-const modules = license.isAuthorized() ? {
-  au: arrayModule,
+const modules = licenseModule.isAuthorized() ? {
+  arrayUtils: arrayModule,
   ob: objectModule,
   str: stringModule,
   nu: numberModule,
@@ -74,19 +77,6 @@ const modules = license.isAuthorized() ? {
   platform: platformModule,
   license: licenseModule
 } : _createRestrictedModules();
-
-// 导出所有模块
-export const {
-  arrayUtils,
-  object,
-  string,
-  number,
-  date,
-  fun,
-  validator,
-  platform,
-  license
-} = modules;
 
 // 默认导出
 export default modules;

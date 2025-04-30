@@ -5,12 +5,11 @@ import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 export default [
-  // UMD版本 (浏览器兼容)
   {
     input: 'src/index.js',
     output: {
       name: 'lqDcJs',
-      file: pkg.browser,
+      file: 'dist/index.umd.js', // 非压缩版本
       format: 'umd',
       exports: 'named'
     },
@@ -20,10 +19,28 @@ export default [
       babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
-      }),
-      terser()
+      })
     ]
   },
+  // UMD版本 (浏览器兼容)
+  // {
+  //   input: 'src/index.js',
+  //   output: {
+  //     name: 'lqDcJs',
+  //     file: pkg.browser,
+  //     format: 'umd',
+  //     exports: 'named'
+  //   },
+  //   plugins: [
+  //     resolve(),
+  //     commonjs(),
+  //     babel({
+  //       babelHelpers: 'bundled',
+  //       exclude: 'node_modules/**'
+  //     }),
+  //     terser()
+  //   ]
+  // },
   // ESM版本 (现代浏览器和打包工具)
   {
     input: 'src/index.js',

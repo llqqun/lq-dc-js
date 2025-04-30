@@ -11,7 +11,9 @@
     "build": "rollup -c",
     "test": "jest",
     "lint": "eslint src --ext .js",
-    "docs": "jsdoc -c jsdoc.json"
+    "docs": "jsdoc -c jsdoc.json",
+    "gen": "node ./tools/license-generator.js generate --id=ft --days=90",
+    "val": "node ./tools/license-generator.js validate lq-91-030269ed91535b640ff8aa49af3b6422e04490b4 --id=ft"
   },
   "keywords": [
     "javascript",
@@ -35,5 +37,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "crypto": "^1.0.1"
+  }
 }

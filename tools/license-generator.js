@@ -15,8 +15,8 @@ const crypto = require('crypto');
  */
 function generateLicenseKey(options = {}) {
   const {
-    prefix = 'lq-',
-    length = 32,
+    prefix = 'lq-91-0302',
+    length = 36,
     clientId = ''
   } = options;
   
@@ -33,9 +33,11 @@ function generateLicenseKey(options = {}) {
       .update(clientId)
       .digest('hex')
       .slice(0, 8);
+    console.log('generateLicenseKey', key, clientHash)
+    const clientHashLength = clientHash.length;
     
     // 将客户端哈希插入到密钥中
-    key = key.slice(0, length / 2) + clientHash + key.slice(length / 2 + 8);
+    key = key.slice(0, length / 2) + clientHash + key.slice(length / 2, length - clientHashLength);
   }
   
   // 添加前缀
@@ -45,15 +47,53 @@ function generateLicenseKey(options = {}) {
 /**
  * 验证授权密钥是否有效
  * @param {string} key - 要验证的授权密钥
+ * @param {Object} [options] - 验证选项
+ * @param {string} [options.clientId] - 客户端标识，如果提供则验证密钥中是否包含此客户端的哈希
  * @returns {boolean} 密钥是否有效
  */
-function validateLicenseKey(key) {
+function validateLicenseKey(key, options = {}) {
+  const { clientId = '' } = options;
+  
+  // 基本验证
   if (!key || typeof key !== 'string') {
     return false;
   }
   
-  // 检查密钥格式（以lq-开头的32位以上字符串）
-  return /^lq-[\w\d]{28,}$/.test(key);
+  // 检查密钥前缀
+  const expectedPrefix = 'lq-91-0302';
+  if (!key.startsWith(expectedPrefix)) {
+    return false;
+  }
+  console.log('val: PrefixPass')
+
+  
+  // 提取密钥部分（去除前缀）
+  const keyPart = key.substring(expectedPrefix.length);
+  
+  // 检查密钥长度
+  if (keyPart.length < 36) {
+    return false;
+  }
+  console.log('val: lenPass', keyPart)
+  
+  // 如果提供了客户端ID，验证密钥中是否包含此客户端的哈希
+  if (clientId) {
+    const clientHash = crypto
+      .createHash('md5')
+      .update(clientId)
+      .digest('hex')
+      .slice(0, 8);
+    
+    // 检查客户端哈希是否在密钥的中间位置
+    const middlePos = Math.floor(keyPart.length / 2);
+    const keyMiddlePart = keyPart.substring(middlePos, middlePos + clientHash.length);
+    if (keyMiddlePart !== clientHash) {
+      return false;
+    }
+  }
+  
+  // 所有检查都通过
+  return true;
 }
 
 /**
@@ -111,18 +151,19 @@ if (require.main === module) {
   } else if (command === 'validate') {
     // 验证密钥
     const key = args[1];
-    const isValid = validateLicenseKey(key);
+    const clientId = args.find(arg => arg.startsWith('--id='))?.split('=')[1] || '';
+    const isValid = validateLicenseKey(key, { clientId });
     console.log(`密钥 ${key} ${isValid ? '有效' : '无效'}`);
   } else {
     // 显示帮助
     console.log('\n=== lq-dc-js 授权密钥生成工具 ===');
     console.log('用法:');
     console.log('  node license-generator.js generate [选项]  生成新的授权密钥');
-    console.log('  node license-generator.js validate <密钥>  验证授权密钥');
+    console.log('  node license-generator.js validate <密钥> [选项]  验证授权密钥');
     console.log('\n选项:');
-    console.log('  --name=<客户端名称>  设置客户端名称');
-    console.log('  --id=<客户端ID>     设置客户端唯一标识');
-    console.log('  --days=<天数>       设置授权有效天数（默认30天）');
+    console.log('  --name=<客户端名称>  设置客户端名称 (仅用于生成)');
+    console.log('  --id=<客户端ID>     设置客户端唯一标识 (生成和验证均可用)');
+    console.log('  --days=<天数>       设置授权有效天数（默认30天，仅用于生成）');
   }
 }
 
