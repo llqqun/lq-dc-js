@@ -1,27 +1,14 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
-import { terser } from 'rollup-plugin-terser';
-import pkg from './package.json';
+import terser from '@rollup/plugin-terser';
+import json from '@rollup/plugin-json';
+import { readFileSync } from 'fs';
+
+// 使用fs模块读取package.json
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
 export default [
-  // {
-  //   input: 'src/index.js',
-  //   output: {
-  //     name: 'lqDcJs',
-  //     file: 'dist/index.umd.js', // 非压缩版本
-  //     format: 'umd',
-  //     exports: 'named'
-  //   },
-  //   plugins: [
-  //     resolve(),
-  //     commonjs(),
-  //     babel({
-  //       babelHelpers: 'bundled',
-  //       exclude: 'node_modules/**'
-  //     })
-  //   ]
-  // },
   // UMD版本 (浏览器兼容)
   {
     input: 'src/index.js',
@@ -34,6 +21,7 @@ export default [
     plugins: [
       resolve(),
       commonjs(),
+      json(),
       babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
@@ -52,6 +40,7 @@ export default [
     plugins: [
       resolve(),
       commonjs(),
+      json(),
       babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
@@ -69,6 +58,7 @@ export default [
     plugins: [
       resolve(),
       commonjs(),
+      json(),
       babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
