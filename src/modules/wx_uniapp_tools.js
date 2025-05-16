@@ -48,3 +48,44 @@ export const message = {
       uni.showModal(obj)
   }
 }
+
+function routerFun(options) {
+    if (typeof options === 'string') {
+      options = { url: options };
+    }
+    const { url, type = 'navigate', params } = options;
+    if (!url && type !== 'back') return;
+  
+    const urlWithParams = params
+      ? `${url}?${Object.entries(params)
+          .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+          .join('&')}`
+      : url;
+    // console.log('routerPush', urlWithParams)
+    switch (type) {
+      case 'navigate':
+        uni.navigateTo({ url: urlWithParams });
+        break;
+      case 'tab':
+        uni.switchTab({ url: urlWithParams });
+        break;
+      case 'redirect':
+        uni.redirectTo({ url: urlWithParams });
+        break;
+      case 'back':
+        if (getCurrentPages().length > 1) {
+            uni.navigateBack({ delta: params?.delta || 1 });
+        } else {
+            routerFun({ url: router.routerHome, type: 'tab' });
+        }
+        break;
+    }
+}
+
+export const router = {
+    routerHome: '',
+    setConfig(str = '') {
+        this.routerHome = str
+    },
+    routerFun
+}
