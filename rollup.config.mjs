@@ -44,7 +44,8 @@ export default [
       babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
-      })
+      }),
+      terser()
     ]
   },
   // CommonJS版本 (Node.js)
@@ -62,7 +63,8 @@ export default [
       babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
-      })
+      }),
+      terser()
     ]
   }
 ];

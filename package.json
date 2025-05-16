@@ -1,6 +1,6 @@
 {
   "name": "lq-dc-js",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "多平台通用的JavaScript工具库",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
