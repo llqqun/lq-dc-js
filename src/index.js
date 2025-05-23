@@ -12,6 +12,8 @@ import * as dateModule from './modules/date';
 import * as functionModule from './modules/function';
 import * as validatorModule from './modules/validator';
 import * as platformModule from './modules/platform';
+import * as utils from './modules/utils';
+import googlData from './modules/google';
 import licenseModule from './modules/license';
 import wuHttp from './modules/wx_uniapp_http';
 import * as wxTools from './modules/wx_uniapp_tools';
@@ -78,9 +80,9 @@ function _createRestrictedModules() {
   };
 }
 
-// 根据授权状态导出模块
 const modules = licenseModule.isAuthorized()
   ? {
+      google: googlData(),
       arrayUtils: arrayModule,
       ob: objectModule,
       str: stringModule,
@@ -90,8 +92,9 @@ const modules = licenseModule.isAuthorized()
       vl: validatorModule,
       platform: platformModule,
       license: licenseModule,
+      utils,
       wuh: wuHttp,
-      wxTools
+      wxTools,
     }
   : _createRestrictedModules();
 
