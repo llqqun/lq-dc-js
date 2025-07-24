@@ -14,7 +14,7 @@
     "docs": "jsdoc -c jsdoc.json",
     "gen": "node ./tools/license-generator.js generate --id=ft --days=90",
     "val": "node ./tools/license-generator.js validate lq-91-030269ed91535b640ff8aa49af3b6422e04490b4 --id=ft",
-    "pub": "npm publish"
+    "pub": "npm publish --registry=https://registry.npmjs.org"
   },
   "keywords": [
     "javascript",
