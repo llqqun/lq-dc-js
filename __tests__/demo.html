@@ -106,7 +106,7 @@
     dateTest.textContent += `日期是否在范围内: ${lqDcJs.date.isInRange(today, today, nextWeek)}\n`;
     dateTest.textContent += `日期差'2025-06-05', '2025-09-05': ${lqDcJs.date.daysBetween('2025-06-05', '2025-09-05')}\n`;
     dateTest.textContent += `日期差'2025-06-05', '2025-09-05': ${lqDcJs.date.daysBetween('2025-06-05', '2025-09-05', 'month')}\n`;
-    dateTest.textContent += `日期差'2025-06-05', '2026-09-05': ${lqDcJs.date.daysBetween('2025-06-05', '2026-09-05', 'year')}\n`;
+    dateTest.textContent += `日期差'2025-06-05', '2026-09-05': ${JSON.stringify(lqDcJs.date.dateDiff('2025-06-05', '2026-09-05'))}\n`;
     // 平台检测测试
     const platformTest = document.getElementById('platform-test');
     platformTest.textContent = `当前环境类型: ${lqDcJs.platform.getEnvType()}\n`;

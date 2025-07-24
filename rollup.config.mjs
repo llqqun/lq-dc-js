@@ -3,17 +3,24 @@ import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 import json from '@rollup/plugin-json';
-import { readFileSync } from 'fs';
+import { readFileSync, copyFileSync } from 'fs';
 
 // 使用fs模块读取package.json
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
+
+const copyTypesPlugin = {
+  name: 'copy-types',
+  writeBundle() {
+    copyFileSync('src/index.d.ts', 'dist/index.d.ts');
+  }
+};
 
 export default [
   {
     input: 'src/index.js',
     output: {
       name: 'lqDcJs',
-      file: 'dist/dev.umd.js', // 非压缩版本
+      file: 'dist/dev.umd.js', // 非压缩测试版本
       format: 'umd',
       exports: 'named'
     },
@@ -44,7 +51,8 @@ export default [
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
       }),
-      terser()
+      terser(),
+      copyTypesPlugin
     ]
   },
   // ESM版本 (现代浏览器和打包工具)
@@ -63,7 +71,8 @@ export default [
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
       }),
-      terser()
+      terser(),
+      copyTypesPlugin
     ]
   },
   // CommonJS版本 (Node.js)
@@ -82,7 +91,8 @@ export default [
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
       }),
-      terser()
+      terser(),
+      copyTypesPlugin
     ]
   }
 ];
