@@ -9,6 +9,24 @@ import { readFileSync } from 'fs';
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
 export default [
+  {
+    input: 'src/index.js',
+    output: {
+      name: 'lqDcJs',
+      file: 'dist/dev.umd.js', // 非压缩版本
+      format: 'umd',
+      exports: 'named'
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      json(),
+      babel({
+        babelHelpers: 'bundled',
+        exclude: 'node_modules/**'
+      }),
+    ]
+  },
   // UMD版本 (浏览器兼容)
   {
     input: 'src/index.js',

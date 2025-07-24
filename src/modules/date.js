@@ -76,18 +76,18 @@ export function daysBetween(dateA, dateB, unit = 'day') {
       const millisecondsPerDay = 1000 * 60 * 60 * 24;
       return Math.floor((utcB - utcA) / millisecondsPerDay);
     case 'month':
-      let years = utcB.getUTCFullYear() - utcA.getUTCFullYear();
-      let months = utcB.getUTCMonth() - utcA.getUTCMonth();
+      let years = safeB.getUTCFullYear() - safeA.getUTCFullYear();
+      let months = safeB.getUTCMonth() - safeA.getUTCMonth();
       // 如果日期B的日期小于日期A的日期，需要调整月份差
-      if (utcB.getUTCDate() < utcA.getUTCDate()) {
+      if (safeB.getUTCDate() < safeA.getUTCDate()) {
         months--;
       }
       return years * 12 + months;
     case 'year':
-      let yearDiff = utcB.getUTCFullYear() - utcA.getUTCFullYear();
+      let yearDiff = safeB.getUTCFullYear() - safeA.getUTCFullYear();
       // 如果日期B的月份和日期小于日期A，需要调整年份差
-      if (utcB.getUTCMonth() < utcA.getUTCMonth() || 
-          (utcB.getUTCMonth() === utcA.getUTCMonth() && utcB.getUTCDate() < utcA.getUTCDate())) {
+      if (safeB.getUTCMonth() < safeA.getUTCMonth() || 
+          (safeB.getUTCMonth() === safeA.getUTCMonth() && safeB.getUTCDate() < safeA.getUTCDate())) {
         yearDiff--;
       }
       return yearDiff;
