@@ -22,7 +22,7 @@ export default [
       name: 'lqDcJs',
       file: 'dist/dev.umd.js', // 非压缩测试版本
       format: 'umd',
-      exports: 'named'
+      exports: 'default',
     },
     plugins: [
       resolve(),
@@ -31,7 +31,7 @@ export default [
       babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**'
-      }),
+      })
     ]
   },
   // UMD版本 (浏览器兼容)
@@ -64,7 +64,10 @@ export default [
       exports: 'named'
     },
     plugins: [
-      resolve(),
+      resolve({
+        browser: true,
+        preferBuiltins: false
+      }),
       commonjs(),
       json(),
       babel({

@@ -45,6 +45,11 @@
     <h2>1. 库导出检查</h2>
     <pre id="export-check"></pre>
   </div>
+
+  <div class="test-section">
+    <h2>数字检测测试</h2>
+    <pre id="num-test"></pre>
+  </div>
   
   <div class="test-section">
     <h2>2. 数组工具测试</h2>
@@ -65,13 +70,13 @@
     <h2>5. 平台检测测试</h2>
     <pre id="platform-test"></pre>
   </div>
+  <!-- 测试esm模块 -->
+  <!-- <script type="module">
+    import lqDcJs from '../dist/index.esm.js';
+    console.log('esm:', lqDcJs);
+  </script> -->
 
   <script>
-    // 检查并处理嵌套的default对象
-    if (lqDcJs && lqDcJs.default && typeof lqDcJs.default === 'object') {
-      console.log('检测到嵌套的default对象，正在修复...');
-      lqDcJs = lqDcJs.default;
-    }
     console.log('init:', lqDcJs);
     console.log(lqDcJs.license);
     // 检查库是否正确加载
@@ -79,14 +84,38 @@
     const exportCheck = document.getElementById('export-check');
     exportCheck.textContent = '库导出对象: ' + Object.keys(lqDcJs).join(', ');
     
+    // 数字工具测试
+    const numTest = document.getElementById('num-test');
+    numTest.textContent = `确保数字: ${lqDcJs.nu.ensureNumber('123')}\n`;
+    numTest.textContent += `安全的四舍五入: ${lqDcJs.nu.round(1.2345, 2)}\n`;
+    numTest.textContent += `安全的数字格式化: ${lqDcJs.nu.format(123456.789, 2, ',')}\n`;
+    numTest.textContent += `限制数字在指定范围内: ${lqDcJs.nu.clamp(10, 1, 5)}\n`;
+    numTest.textContent += `检查数字是否安全: ${lqDcJs.nu.isSafeNumber(123)}\n`;
+    numTest.textContent += `随机整数: ${lqDcJs.nu.random(1, 1000)}\n`;
+    numTest.textContent += `随机浮点数: ${lqDcJs.nu.randomFloat(1, 10)}\n`;
+    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.nu.isInRange(10, 1, 5)}\n`;
+    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.nu.isInRange(10, 1)}\n`;
+    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.nu.isInRange(10, 1, 10, true)}\n`;
+
     // 数组工具测试
     const arrayTest = document.getElementById('array-test');
     const testArray = [1, 2, 2, 3, 4, 5, 5];
-    arrayTest.textContent = `原始数组: ${JSON.stringify(testArray)}\n`;
+    const treeData = [
+      { id: 0, parentId: 0, name: '-A' },
+      { id: 1, parentId: 0, name: 'A' },
+      { id: 2, parentId: 1, name: 'B' },
+      { id: 3, parentId: 1, name: 'C' },
+      { id: 4, parentId: 2, name: 'D' },
+    ]
+    const repeatedArray = [{id: 1, name: 'Alice'}, {id: 2, name: 'Bob'}, {id: 1, name: 'Charlie'},  {id: 12, name: 'Alice'}]
+    arrayTest.textContent = `原始数组: ${JSON.stringify(testArray)}, ${JSON.stringify(repeatedArray)}\n`;
     arrayTest.textContent += `安全获取索引2的值: ${lqDcJs.arrayUtils.safeGet(testArray, 2)}\n`;
     arrayTest.textContent += `安全获取索引10的值(默认null): ${lqDcJs.arrayUtils.safeGet(testArray, 10)}\n`;
-    arrayTest.textContent += `数组去重: ${JSON.stringify(lqDcJs.arrayUtils.unique(testArray))}\n`;
+    arrayTest.textContent += `数组去重: ${JSON.stringify(lqDcJs.arrayUtils.unique(repeatedArray, 'id'))}\n`;
+    arrayTest.textContent += `数组去重:迭代函数: ${JSON.stringify(lqDcJs.arrayUtils.unique(repeatedArray, (item) => item.name))}\n`;
     arrayTest.textContent += `确保数组: ${JSON.stringify(lqDcJs.arrayUtils.ensureArray('test'))}\n`;
+    arrayTest.textContent += `数组格式化成树形结构: ${JSON.stringify(lqDcJs.arrayUtils.formatTree(treeData))}\n`;
+
     
     // 字符串工具测试
     const stringTest = document.getElementById('string-test');

@@ -26,13 +26,26 @@ export function safeGet(arr, index, defaultValue = null) {
 /**
  * 移除数组中的重复元素
  * @param {Array} arr - 要操作的数组
+ * @param {Function|string} [iterator] - 迭代函数或属性名
  * @returns {Array} 去重后的新数组
  */
-export function unique(arr) {
+export function unique(arr, iterator) {
   if (!Array.isArray(arr)) {
-    return [];
+    throw new TypeError('unique: 输入参数必须是数组');
   }
-  
+
+  if (typeof iterator === 'function' || typeof iterator === 'string') {
+    const seen = new Set();
+    return arr.filter(item => {
+      const key = typeof iterator === 'function'
+        ? iterator(item)
+        : item?.[iterator];
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
   return [...new Set(arr)];
 }
 
@@ -58,15 +71,9 @@ export function ensureArray(value) {
  * @param {*} [rootValue=undefined] - 根节点的父级值，默认为undefined
  * @returns {Array} 格式化后的树形结构数组
  * @example
- * const data = [
- *   { id: 0, parentId: 0, name: '-A' },
- *   { id: 1, parentId: 0, name: 'A' },
- *   { id: 2, parentId: 1, name: 'B' },
- *   { id: 3, parentId: 1, name: 'C' },
- *   { id: 4, parentId: 2, name: 'D' },
- * ]
  */
-export function formatTree(arr, idKey, parentKey, childrenKey, rootValue = undefined) {
+export function formatTree(arr, idKey = 'id', parentKey = 'parentId', childrenKey = 'children', rootValue = undefined) {
+
   if (!Array.isArray(arr)) {
     return [];
   }
