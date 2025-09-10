@@ -3,7 +3,7 @@
  * 用于生成有效的授权密钥
  */
 
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 /**
  * 生成授权密钥

@@ -5,7 +5,7 @@ const data = {
 // 全局环境信息模块
 // 自动检测当前运行环境，供全局使用
 function getEnv(userAgent = undefined) {
-  const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
+  let ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
   let platform = 'unknown';
   let isMobile = false;
   let isMiniProgram = false;

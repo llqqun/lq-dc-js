@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/dev.umd.js"></script>
+</head>
+<body>
+    <script>
+        console.log('init:', lqDcJs);
+        const testFun = lqDcJs.ob.deepClone;
+        console.log('测试函数:', testFun);
+        const a = { num: 1, str: 'x', d: new Date(), r: /ab+/gi };
+        a.self = a; // 循环引用
+        a.map = new Map([['k', { nested: 2 }]]);
+        a.set = new Set([1, { v: 2 }]);
+        a.buf = new Uint8Array([1,2,3]);
+        a[Symbol('sym')] = 1111;
+        const cloned = testFun(a);
+        console.log('origin:', a);
+        console.log('cloned:', cloned);
+        console.log(cloned !== a); // true
+        console.log(cloned.self === a);
+        console.log(cloned.self === cloned); // true （循环引用被修复）
+        console.log(cloned.map.get('k') !== a.map.get('k')); // true
+    </script>
+</body>
+</html>

@@ -41,7 +41,7 @@ export default [
       name: 'lqDcJs',
       file: pkg.browser,
       format: 'umd',
-      exports: 'named'
+      exports: 'default'
     },
     plugins: [
       resolve(),
