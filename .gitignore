@@ -9,6 +9,9 @@ coverage/
 .env.local
 .env.*.local
 
+git-count.sh
+git_report_*.txt
+
 # Log files
 npm-debug.log*
 yarn-debug.log*
