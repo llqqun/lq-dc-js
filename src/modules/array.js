@@ -70,7 +70,6 @@ export function ensureArray(value) {
  * @param {string} childrenKey - 子级数组的键名
  * @param {*} [rootValue=undefined] - 根节点的父级值，默认为undefined
  * @returns {Array} 格式化后的树形结构数组
- * @example
  */
 export function formatTree(arr, idKey = 'id', parentKey = 'parentId', childrenKey = 'children', rootValue = undefined) {
 

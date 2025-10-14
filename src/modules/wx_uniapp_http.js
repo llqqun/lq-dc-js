@@ -237,4 +237,6 @@ api.setResponseInterceptor((response) => {
   return response.data;
 });
 
+export const OC = { API };
+
 export default api;
