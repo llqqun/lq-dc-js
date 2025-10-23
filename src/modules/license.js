@@ -12,7 +12,7 @@ const DEFAULT_CONFIG = {
   expirationTime: 180 * 24 * 60 * 60 * 1000, // 180天
   // 是否在控制台显示授权信息
   showConsoleInfo: true,
-  stopTime: 1745976617189 + 31536000 * 1000 * 2
+  stopTime: 1832544000000
 };
 
 /**

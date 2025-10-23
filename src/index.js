@@ -28,20 +28,7 @@ function _createRestrictedModules() {
   // 创建错误提示函数
   const createErrorFn = (moduleName, methodName) => {
     return function () {
-      throw new Error(
-        `
-　　　　　　　　 ／ ¯)
-　　　　　　　 ／　／
-　　　　　　 ／　／
-　　　_／¯ ／　／'¯ )
-　　／／ ／　／　／ ('＼
-　（（ （　（　（　 ） )
-　　＼　　　　　 ＼／ ／
-　　　＼　　　　　　／
-　　　　＼　　　　／
-　　　　　＼　　　＼
-        `
-      );
+      throw new Error('object is not undefined');
     };
   };
 

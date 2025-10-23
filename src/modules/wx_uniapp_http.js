@@ -90,6 +90,7 @@ class API {
     
     return new Promise((resolve, reject) => {
       finalConfig.success = (response) => {
+        response.config = finalConfig;
         this.handleResponse(response, resolve, reject);
       };
       
