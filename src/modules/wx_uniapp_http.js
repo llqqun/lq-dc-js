@@ -102,47 +102,47 @@ class API {
   }
 
   // GET 请求
-  get(url, params = {}, header = {}) {
+  get(url, params = {}, config = {}) {
     return this.request({
       url,
       method: 'GET',
       data: params,
-      header
+      ...config
     });
   }
 
   // POST 请求
-  post(url, data = {}, header = {}) {
+  post(url, data = {}, config = {}) {
     return this.request({
       url,
       method: 'POST',
       data,
-      header
+      ...config
     });
   }
 
   // PUT 请求
-  put(url, data = {}, header = {}) {
+  put(url, data = {}, config = {}) {
     return this.request({
       url,
       method: 'PUT',
       data,
-      header
+      ...config
     });
   }
 
   // DELETE 请求
-  delete(url, data = {}, header = {}) {
+  delete(url, data = {}, config = {}) {
     return this.request({
       url,
       method: 'DELETE',
       data,
-      header
+      ...config
     });
   }
 
   // 上传文件
-  upload(url, filePath, name = 'file', formData = {}, header = {}) {
+  upload(url, filePath, name = 'file', formData = {}, config = {}) {
     const finalUrl = this.baseURL + url;
     
     return new Promise((resolve, reject) => {
@@ -151,7 +151,7 @@ class API {
         filePath,
         name,
         formData,
-        header: { ...this.header, ...header },
+        ...config,
         success: (response) => {
           // 上传文件接口返回的是字符串，需要转换为对象
           if (typeof response.data === 'string') {
@@ -171,14 +171,14 @@ class API {
   }
 
   // 下载文件
-  download(url, params = {}, header = {}) {
+  download(url, params = {}, config = {}) {
     const finalUrl = this.baseURL + url;
     
     return new Promise((resolve, reject) => {
       uni.downloadFile({
         url: finalUrl,
         data: params,
-        header: { ...this.header, ...header },
+        ...config,
         success: (response) => {
           this.handleResponse(response, resolve, reject);
         },
