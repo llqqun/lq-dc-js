@@ -60,7 +60,6 @@ function _createRestrictedModules() {
     fun: createRestrictedModule(functionModule, 'function'),
     validator: createRestrictedModule(validatorModule, 'validator'),
     platform: createRestrictedModule(platformModule, 'platform'),
-    // 授权模块始终可用
     license: licenseModule,
     wxTools: createRestrictedModule(wxTools, 'wxTools'),
     wuh: createRestrictedModule(wuHttp, 'wuh'),

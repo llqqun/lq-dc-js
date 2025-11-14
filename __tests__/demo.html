@@ -85,16 +85,16 @@
     
     // 数字工具测试
     const numTest = document.getElementById('num-test');
-    numTest.textContent = `确保数字: ${lqDcJs.nu.ensureNumber('123')}\n`;
-    numTest.textContent += `安全的四舍五入: ${lqDcJs.nu.round(1.2345, 2)}\n`;
-    numTest.textContent += `安全的数字格式化: ${lqDcJs.nu.format(123456.789, 2, ',')}\n`;
-    numTest.textContent += `限制数字在指定范围内: ${lqDcJs.nu.clamp(10, 1, 5)}\n`;
-    numTest.textContent += `检查数字是否安全: ${lqDcJs.nu.isSafeNumber(123)}\n`;
-    numTest.textContent += `随机整数: ${lqDcJs.nu.random(1, 1000)}\n`;
-    numTest.textContent += `随机浮点数: ${lqDcJs.nu.randomFloat(1, 10)}\n`;
-    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.nu.isInRange(10, 1, 5)}\n`;
-    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.nu.isInRange(10, 1)}\n`;
-    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.nu.isInRange(10, 1, 10, true)}\n`;
+    numTest.textContent = `确保数字: ${lqDcJs.number.ensureNumber('123')}\n`;
+    numTest.textContent += `安全的四舍五入: ${lqDcJs.number.round(1.2345, 2)}\n`;
+    numTest.textContent += `安全的数字格式化: ${lqDcJs.number.format(123456.789, 2, ',')}\n`;
+    numTest.textContent += `限制数字在指定范围内: ${lqDcJs.number.clamp(10, 1, 5)}\n`;
+    numTest.textContent += `检查数字是否安全: ${lqDcJs.number.isSafeNumber(123)}\n`;
+    numTest.textContent += `随机整数: ${lqDcJs.number.random(1, 1000)}\n`;
+    numTest.textContent += `随机浮点数: ${lqDcJs.number.randomFloat(1, 10)}\n`;
+    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.number.isInRange(10, 1, 5)}\n`;
+    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.number.isInRange(10, 1)}\n`;
+    numTest.textContent += `判断数字是否在指定范围内: ${lqDcJs.number.isInRange(10, 1, 10, true)}\n`;
 
     // 数组工具测试
     const arrayTest = document.getElementById('array-test');
@@ -146,6 +146,11 @@
       const browserInfo = lqDcJs.platform.getBrowserInfo();
       platformTest.textContent += `浏览器信息: ${JSON.stringify(browserInfo, null, 2)}\n`;
     }
+    lqDcJs.utils.copyText('Hello World').then(() => {
+      console.log('文本复制成功');
+    }).catch((err) => {
+      console.error('文本复制失败:', err);
+    });
   </script>
 </body>
 </html>
