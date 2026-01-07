@@ -24,7 +24,6 @@ import * as wxTools from './modules/wx_uniapp_tools';
  * @private
  */
 function _createRestrictedModules() {
-  console.log('_createRestrictedModules');
   // 创建错误提示函数
   const createErrorFn = (moduleName, methodName) => {
     return function () {

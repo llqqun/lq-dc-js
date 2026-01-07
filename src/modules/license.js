@@ -9,10 +9,10 @@ const DEFAULT_CONFIG = {
   // 授权密钥存储的键名
   storageKey: 'lq-dc-js-license-key',
   // 授权过期时间（毫秒）
-  expirationTime: 180 * 24 * 60 * 60 * 1000, // 180天
+  expirationTime: 365 * 24 * 60 * 60 * 1000, // 365天
   // 是否在控制台显示授权信息
   showConsoleInfo: true,
-  stopTime: 1832544000000
+  stopTime: 1849305600000 // 2028-08-08 00:00:00
 };
 
 /**
