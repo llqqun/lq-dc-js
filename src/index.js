@@ -59,7 +59,6 @@ function _createRestrictedModules() {
     fun: createRestrictedModule(functionModule, 'function'),
     validator: createRestrictedModule(validatorModule, 'validator'),
     platform: createRestrictedModule(platformModule, 'platform'),
-    license: licenseModule,
     wxTools: createRestrictedModule(wxTools, 'wxTools'),
     wuh: createRestrictedModule(wuHttp, 'wuh'),
   };
@@ -76,12 +75,9 @@ const modules = licenseModule.isAuthorized()
       fun: functionModule,
       vaildator: validatorModule,
       platform: platformModule,
-      license: licenseModule,
       utils,
       wuh: wuHttp,
       wxTools,
     }
   : _createRestrictedModules();
-
-// 默认导出
 export default modules;
