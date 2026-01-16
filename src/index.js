@@ -17,6 +17,7 @@ import googlData from './modules/google';
 import licenseModule from './modules/license';
 import wuHttp from './modules/wx_uniapp_http';
 import * as wxTools from './modules/wx_uniapp_tools';
+import * as addressModule from './modules/address';
 
 /**
  * 创建受限版本的模块
@@ -78,6 +79,7 @@ const modules = licenseModule.isAuthorized()
       utils,
       wuh: wuHttp,
       wxTools,
+      address: addressModule,
     }
   : _createRestrictedModules();
 export default modules;
